@@ -91,16 +91,14 @@ list(dataset["Gold"])
 dataset["Total"].median()
 
 
-# In[21]:
+# In[5]:
 
 
+
+import numpy as np
+import pandas as pd
+dataset=pd.read_excel("D:\Studies\Data Science\Projects\Project1\Tokyo 2021 Dataset\\Medals.xlsx")
 q1=np.percentile(dataset["Total"], 75)
-
-
-# In[22]:
-
-
-q1
 
 
 # In[24]:
@@ -227,13 +225,13 @@ plt.hist(x=dataset2["Total"], bins='auto', color='#0504aa',
          alpha=0.7, rwidth=0.85 )
 
 
-# In[52]:
+# In[12]:
 
 
 #Desinty Plot
 
-ax= dataset2["Gold"].plot.hist(density=True, xlim=[1,12], bins=range(1,12)) 
-dataset2["Gold"].plot.density(ax=ax)
+ax= dataset["Gold"].plot.hist(density=True, xlim=[1,18], bins=range(1,18)) 
+dataset["Gold"].plot.density(ax=ax)
 
 
 # In[53]:
@@ -243,6 +241,98 @@ dataset2["Gold"].plot.density(ax=ax)
 #Binary and Categorical data
 
 dataset2["Gold"].mode()
+
+
+# In[3]:
+
+
+import pandas as pd
+dataset= pd.read_excel("D:\Studies\Data Science\Projects\Project1\Tokyo 2021 Dataset\\Medals.xlsx")
+
+
+# In[4]:
+
+
+dataset.head()
+
+
+# In[7]:
+
+
+#Exploaring binary and categorigal data
+dataset["Total"].mode()
+
+
+# In[11]:
+
+
+#Bar Graph
+
+import matplotlib.pyplot as plt
+ax=dataset.iloc[:10,:].plot.bar(x="Team/NOC", y="Gold", figsize=(4,4), legend= False)
+ax.set_xlabel("Gold County")
+ax.set_ylabel("Country")
+
+
+# In[26]:
+
+
+#pie chart
+pie_data= dataset.iloc[:10, :]
+plt.pie(pie_data["Gold"], labels=pie_data["Team/NOC"], autopct='%1.1f')
+
+
+# In[27]:
+
+
+#Correlation
+dataset.corr()
+
+
+# In[30]:
+
+
+#scatterplot
+dataset.plot.scatter(x="Silver", y="Bronze")
+
+
+# In[39]:
+
+
+#Hexagonal binning/plot
+dataset.plot.hexbin(x="Silver",y="Bronze",gridsize=20, sharex=False)
+
+
+# In[42]:
+
+
+#contour plot
+
+import seaborn as sns
+ax=sns.kdeplot(dataset["Gold"], dataset["Silver"])
+ax
+
+
+# In[43]:
+
+
+#heatmap
+sns.heatmap(dataset.corr())
+
+
+# In[51]:
+
+
+#contigency table
+crosstab=dataset.pivot_table(index='Team/NOC', columns='Gold', aggfunc=lambda x:len(x),margins=True)
+crosstab.fillna(0)
+
+
+# In[52]:
+
+
+#Violin Plot
+sns.violinplot(x=dataset["Gold"])
 
 
 # In[ ]:
